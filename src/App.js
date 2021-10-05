@@ -1,9 +1,9 @@
 import "./App.css";
-import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 
 import Home from "./pages/home";
+import Profile from "./pages/profile";
 import Footer from "./components/Footer";
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
       <NavBar />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/profile" component={Profile} />
       </Switch>
       <Footer />
     </BrowserRouter>

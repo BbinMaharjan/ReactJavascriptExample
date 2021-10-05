@@ -1,9 +1,12 @@
 import React from "react";
-
+import "./home.css";
+import bg from "../image/bg.jpg";
 const Home = (props) => {
   return (
     <div>
-      <h1>Home</h1>
+      <div className="image">
+        <img src={bg} alt="gym"></img>
+      </div>
     </div>
   );
 };

@@ -7,10 +7,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
 } from "reactstrap";
 
 const NavBar = (props) => {
@@ -21,26 +17,16 @@ const NavBar = (props) => {
   return (
     <div>
       <Navbar color="dark" dark expand="md" fixed="top">
-        <NavbarBrand href="/">My Gym</NavbarBrand>
+        <NavbarBrand href="/">Example</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
               <NavLink href="/">Home</NavLink>
             </NavItem>
-            <UncontrolledDropdown inNavbar>
-              <DropdownToggle nav caret>
-                SIGN IN
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>Gym Owner</DropdownItem>
-                <DropdownItem>Gym Member</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem style={{ background: "green" }}>
-                  <NavLink href="/admin/login">Admin</NavLink>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+            <NavItem>
+              <NavLink href="/profile">Profile</NavLink>
+            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
