@@ -7,6 +7,7 @@ import {
   CardTitle,
   CardSubtitle,
   CardFooter,
+  Button,
 } from "reactstrap";
 
 import "./posts.css";
@@ -16,19 +17,26 @@ const BASE_URL = "https://jsonplaceholder.typicode.com";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
+  const [counter, setCounter] = useState(0);
   //const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getPosts();
   }, []);
 
+  useEffect(() => {
+    console.log("i Am render");
+  }, [counter]);
+
   const getPosts = async () => {
     const res = await axios.get(`${BASE_URL}/posts`);
     setPosts(res.data);
   };
 
+  console.log(counter);
   return (
     <div className="container">
+      <Button onClick={() => setCounter(counter + 1)}>Click</Button>
       {posts.map((post) => {
         return (
           <Card key={post.id} className="mt-3">
