@@ -19,7 +19,7 @@ const Todo = (props) => {
 
   const onAddTodo = () => {
     if (newTodo.trim()) {
-      let newTodos = [...todos, { todo: newTodo.trim(), id: Date.now() }];
+      let newTodos = [{ todo: newTodo.trim(), id: Date.now() }, ...todos];
       setTodos(newTodos);
       setNewTodo("");
       saveData(newTodos);
@@ -51,7 +51,7 @@ const Todo = (props) => {
 
   return (
     <div className=" container mt-5 todo">
-      <h2 className="text-center">Todo</h2>
+      <h2 className="text-center">My Todo App</h2>
       <div className="lib">
         <Label style={{ marginRight: "10px" }} for="MyTodo">
           Todo:
@@ -72,7 +72,7 @@ const Todo = (props) => {
       <Table striped>
         <thead>
           <tr>
-            <th>Tasks</th>
+            <th>My All ToDos</th>
           </tr>
         </thead>
 
