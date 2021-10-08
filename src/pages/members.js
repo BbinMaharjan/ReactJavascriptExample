@@ -20,8 +20,7 @@ const Members = () => {
 
   const getMembers = async () => {
     const res = await axios.get(`${BASE_URL}/admin/members`);
-    console.log(JSON.stringify(res.data));
-    setMembers(res.data);
+    setMembers(res.data.Member);
   };
   return (
     <div className="container" style={{ marginTop: "65px" }}>
