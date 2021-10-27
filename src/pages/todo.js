@@ -2,51 +2,29 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Label, Input, Button, Table } from "reactstrap";
 
+import { useDispatch, useSelector } from "react-redux";
+import { addTodosToLocalStorage, getAllTodos } from "../store/actions/todos";
+
 import "../index.css";
+
 const Todo = (props) => {
-  const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState("");
+  const [title, setTitle] = useState("");
 
-  const saveData = (newTodos) => {
-    localStorage.setItem("todos", JSON.stringify(newTodos));
-  };
+  const todos = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
 
+  console.log(todos);
   useEffect(() => {
-    if (localStorage.getItem("todos")) {
-      setTodos(JSON.parse(localStorage.getItem("todos")));
-    }
-  }, []);
+    dispatch(getAllTodos());
+  });
 
   const onAddTodo = () => {
-    if (newTodo.trim()) {
-      let newTodos = [{ todo: newTodo.trim(), id: Date.now() }, ...todos];
-      setTodos(newTodos);
-      setNewTodo("");
-      saveData(newTodos);
-    }
-  };
-
-  const updateTodo = (id) => {
-    const updateTodo = prompt("Update Todo");
-    let data = JSON.parse(localStorage.getItem("todos"));
-    const myData = data.map((x) => {
-      if (x.id === id) {
-        return {
-          ...x,
-          todo: updateTodo,
-        };
-      }
-      return x;
-    });
-    localStorage.setItem("todos", JSON.stringify(myData));
-    window.location.reload();
-  };
-
-  const deleteTodo = (id) => {
-    let newTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(newTodos);
-
-    saveData(newTodos);
+    const todo = {
+      id: Math.random().toString(),
+      title,
+    };
+    dispatch(addTodosToLocalStorage(todo));
+    setTitle("");
   };
 
   return (
@@ -58,17 +36,18 @@ const Todo = (props) => {
         </Label>
         <Input
           type="text"
-          name="todos"
+          name="todo"
           id="todoInput"
           placeholder="My Todo"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           style={{ marginRight: "10px" }}
         />
         <Button onClick={onAddTodo} color="success">
           Add
         </Button>
       </div>
+      <h1>{todos}</h1>
       <Table striped>
         <thead>
           <tr>
@@ -77,19 +56,18 @@ const Todo = (props) => {
         </thead>
 
         <tbody id="table">
-          {todos.map((todo) => (
+          <tr>
+            <td>{todos}</td>
+          </tr>
+          {/* {todos.map((todo) => (
             <tr key={todo.id}>
-              <td>{todo.todo}</td>
+              <td>{todo.title}</td>
               <td>
-                <Button color="info" onClick={() => updateTodo(todo.id)}>
-                  Update
-                </Button>{" "}
-                <Button color="danger" onClick={() => deleteTodo(todo.id)}>
-                  Delete
-                </Button>
+                <Button color="info">Update</Button>{" "}
+                <Button color="danger">Delete</Button>
               </td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </Table>
     </div>
