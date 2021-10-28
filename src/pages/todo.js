@@ -1,34 +1,37 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Label, Input, Button, Table } from "reactstrap";
 
 import { useDispatch, useSelector } from "react-redux";
-import { addTodosToLocalStorage, getAllTodos } from "../store/actions/todos";
+import { addTodos, markAsComplete } from "../store/actions/todos";
 
 import "../index.css";
 
 const Todo = (props) => {
   const [title, setTitle] = useState("");
 
-  const todos = useSelector((state) => state.todos);
+  const todos = useSelector((state) => state.todosState.todos);
+  // console.log("page", todos);
   const dispatch = useDispatch();
-
-  console.log(todos);
-  useEffect(() => {
-    dispatch(getAllTodos());
-  });
+  const allTodos = useSelector((state) => state.todosState.todos);
+  const completedTodos = allTodos.filter((todo) => todo.isComplete);
 
   const onAddTodo = () => {
     const todo = {
       id: Math.random().toString(),
       title,
+      isComplete: false,
     };
-    dispatch(addTodosToLocalStorage(todo));
+    dispatch(addTodos(todo));
     setTitle("");
   };
 
+  const handleListTap = (id) => {
+    dispatch(markAsComplete(id));
+  };
+
   return (
-    <div className=" container mt-5 todo">
+    <div className=" container mt-8 todo">
       <h2 className="text-center">My Todo App</h2>
       <div className="lib">
         <Label style={{ marginRight: "10px" }} for="MyTodo">
@@ -47,7 +50,6 @@ const Todo = (props) => {
           Add
         </Button>
       </div>
-      <h1>{todos}</h1>
       <Table striped>
         <thead>
           <tr>
@@ -56,18 +58,46 @@ const Todo = (props) => {
         </thead>
 
         <tbody id="table">
-          <tr>
-            <td>{todos}</td>
-          </tr>
-          {/* {todos.map((todo) => (
+          {todos.map((todo) => (
             <tr key={todo.id}>
               <td>{todo.title}</td>
               <td>
-                <Button color="info">Update</Button>{" "}
-                <Button color="danger">Delete</Button>
+                <Button
+                  color="danger"
+                  onClick={() => {
+                    handleListTap(todo.id);
+                  }}
+                >
+                  Complete
+                </Button>
               </td>
             </tr>
-          ))} */}
+          ))}
+        </tbody>
+      </Table>
+      <Table striped>
+        <thead>
+          <tr>
+            <th>Completed Todos</th>
+          </tr>
+        </thead>
+
+        <tbody id="table">
+          {completedTodos.map((todo) => (
+            <tr key={todo.id}>
+              <td>{todo.title}</td>
+              {/* <td>
+                <Button
+                  color="danger"
+                  onClick={() => {
+                    handleListTap(todo.id);
+                  }}
+                >
+                  Complete
+                </Button>
+              </td> */}
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>

@@ -1,6 +1,7 @@
 // Actions Types
 export const ADD_TODOS = "ADD_TODOS";
-export const GET_ALL_TODOS = "GET_ALL_TODOS";
+
+export const MARK_AS_COMPLETE = "MARK_AS_COMPLETE";
 
 // Action Generators
 
@@ -9,22 +10,7 @@ export const addTodos = (todo) => ({
   payload: todo,
 });
 
-export const getTodos = (todos) => ({
-  type: GET_ALL_TODOS,
-  payload: todos,
+export const markAsComplete = (todoId) => ({
+  type: MARK_AS_COMPLETE,
+  payload: todoId,
 });
-
-// Actions
-
-export const addTodosToLocalStorage = (todo) => async (dispatch) => {
-  const response = await localStorage.setItem("todos", JSON.stringify(todo));
-  todo = response;
-  dispatch(addTodos(todo));
-};
-
-export const getAllTodos = (todos) => async (dispatch) => {
-  const response = await JSON.parse(localStorage.getItem("todos"));
-  console.log("action", response);
-  todos = response;
-  dispatch(getTodos(todos));
-};

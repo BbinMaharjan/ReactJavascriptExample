@@ -18,15 +18,10 @@ const NavBar = (props) => {
   return (
     <div>
       <Navbar color="dark" dark expand="md" fixed="top">
-        <NavbarBrand href="/">TodoApp</NavbarBrand>
+        <NavbarBrand href="/Todo">TodoApp</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            <Link to="/">
-              <NavItem>
-                <NavLink>Home</NavLink>
-              </NavItem>
-            </Link>
             <Link to="/Todo">
               <NavItem>
                 <NavLink>Todo</NavLink>
