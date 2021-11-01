@@ -11,7 +11,7 @@ const Member = (props) => {
   //console.log({ members });
   React.useEffect(() => {
     dispatch(getAllMembers());
-  });
+  }, [dispatch]);
 
   return (
     <>
